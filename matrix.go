@@ -19,3 +19,16 @@ func Dot1D2D(d1 []float64, d2 [][]float64) (output []float64, err error) {
 	}
 	return
 }
+
+func ApplyFunction(f func (float64) (float64, error), scalr []float64) (output []float64, err error) {
+	var applied float64
+	for _, v := range scalr {
+		applied, err = f(v)
+		if err != nil {
+			return
+		}
+		output = append(output, applied)
+	}
+	return
+}
+

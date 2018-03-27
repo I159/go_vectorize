@@ -42,3 +42,37 @@ func TestDot1D2D(t *testing.T) {
 		})
 	}
 }
+
+func TestApplyFunction(t *testing.T) {
+	type args struct {
+		f     func(float64) (float64, error)
+		scalr []float64
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantOutput []float64
+		wantErr    bool
+	}{
+		{
+			name: "successFunction",
+			args: args{
+				f:     func(x float64) (float64, error) { return x / 2, nil },
+				scalr: []float64{14, 38, 12},
+			},
+			wantOutput: []float64{7, 19, 6},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotOutput, err := ApplyFunction(tt.args.f, tt.args.scalr)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ApplyFunction() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(gotOutput, tt.wantOutput) {
+				t.Errorf("ApplyFunction() = %v, want %v", gotOutput, tt.wantOutput)
+			}
+		})
+	}
+}
