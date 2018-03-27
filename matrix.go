@@ -20,7 +20,7 @@ func Dot1D2D(d1 []float64, d2 [][]float64) (output []float64, err error) {
 	return
 }
 
-func ApplyFunction(f func (float64) (float64, error), scalr []float64) (output []float64, err error) {
+func ApplyFunction(f func(float64) (float64, error), scalr []float64) (output []float64, err error) {
 	var applied float64
 	for _, v := range scalr {
 		applied, err = f(v)
@@ -30,5 +30,17 @@ func ApplyFunction(f func (float64) (float64, error), scalr []float64) (output [
 		output = append(output, applied)
 	}
 	return
+}
+
+func Add(a, b []float64) ([]float64, error) {
+	if len(a) != len(b) {
+		return nil, fmt.Errorf(
+			"Wrong size of arrays: a = %d, b = %d", len(a), len(b),
+		)
+	}
+	for i, v := range b {
+		a[i] += v
+	}
+	return a, nil
 }
 
