@@ -91,8 +91,8 @@ func TestAdd(t *testing.T) {
 		{
 			name: "add_1d_to_1d",
 			args: args{
-				[]float64{1,2,3},
-				[]float64{2,3,1},
+				[]float64{1, 2, 3},
+				[]float64{2, 3, 1},
 			},
 			want: []float64{3, 5, 4},
 		},
@@ -106,6 +106,38 @@ func TestAdd(t *testing.T) {
 			}
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Add() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestOuterProduct(t *testing.T) {
+	type args struct {
+		column []float64
+		row    []float64
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantOutput [][]float64
+	}{
+		{
+			name: "outer_product",
+			args: args{
+				[]float64{1,3,5},
+				[]float64{2,4,6, 8},
+			},
+			wantOutput: [][]float64{
+				{2, 4, 6, 8},
+				{6, 12, 18, 24},
+				{10, 20, 30, 40},
+			}, 
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if gotOutput := OuterProduct(tt.args.column, tt.args.row); !reflect.DeepEqual(gotOutput, tt.wantOutput) {
+				t.Errorf("OuterProduct() = %v, want %v", gotOutput, tt.wantOutput)
 			}
 		})
 	}

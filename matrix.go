@@ -44,3 +44,16 @@ func Add(a, b []float64) ([]float64, error) {
 	return a, nil
 }
 
+func OuterProduct(column, row []float64) (output [][]float64) {
+	var rowOut []float64
+
+	for _, i := range column {
+		rowOut = nil
+		for _, j := range row {
+			rowOut = append(rowOut, i*j)
+		}
+		output = append(output, rowOut)
+	}
+	return
+}
+
