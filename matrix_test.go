@@ -76,3 +76,37 @@ func TestApplyFunction(t *testing.T) {
 		})
 	}
 }
+
+func TestAdd(t *testing.T) {
+	type args struct {
+		a []float64
+		b []float64
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    []float64
+		wantErr bool
+	}{
+		{
+			name: "add_1d_to_1d",
+			args: args{
+				[]float64{1,2,3},
+				[]float64{2,3,1},
+			},
+			want: []float64{3, 5, 4},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := Add(tt.args.a, tt.args.b)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Add() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Add() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
