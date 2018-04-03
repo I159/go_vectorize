@@ -38,8 +38,29 @@ func Add(a, b []float64) ([]float64, error) {
 			"Wrong size of arrays: a = %d, b = %d", len(a), len(b),
 		)
 	}
+
 	for i, v := range b {
 		a[i] += v
+	}
+	return a, nil
+}
+
+func EntrywiseSum(a, b [][]float64) ([][]float64, error) {
+	if len(a) != len(b) {
+		return nil, fmt.Errorf(
+			"Wrong size of matrices: a = %d, b = %d", len(a), len(b),
+		)
+	}
+
+	for i, v := range b {
+		if len(v) != len(a[i]) {
+			return nil, fmt.Errorf(
+				"Wrong size of arrays: a[i] = %d, b[i] = %d", len(a[i]), len(b),
+			)
+		}
+		for j, k := range v {
+			a[i][j] += k
+		}
 	}
 	return a, nil
 }
@@ -56,4 +77,3 @@ func OuterProduct(column, row []float64) (output [][]float64) {
 	}
 	return
 }
-

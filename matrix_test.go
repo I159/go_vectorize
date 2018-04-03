@@ -124,20 +124,67 @@ func TestOuterProduct(t *testing.T) {
 		{
 			name: "outer_product",
 			args: args{
-				[]float64{1,3,5},
-				[]float64{2,4,6, 8},
+				[]float64{1, 3, 5},
+				[]float64{2, 4, 6, 8},
 			},
 			wantOutput: [][]float64{
 				{2, 4, 6, 8},
 				{6, 12, 18, 24},
 				{10, 20, 30, 40},
-			}, 
+			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if gotOutput := OuterProduct(tt.args.column, tt.args.row); !reflect.DeepEqual(gotOutput, tt.wantOutput) {
 				t.Errorf("OuterProduct() = %v, want %v", gotOutput, tt.wantOutput)
+			}
+		})
+	}
+}
+
+func TestEntrywiseSum(t *testing.T) {
+	type args struct {
+		a [][]float64
+		b [][]float64
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    [][]float64
+		wantErr bool
+	}{
+		{
+			name: "add_2d",
+			args: args{
+				[][]float64{
+					{1, 2, 3},
+					{1, 2, 3},
+					{1, 2, 3},
+				},
+				[][]float64{
+					{1, 2, 3},
+					{1, 2, 3},
+					{1, 2, 3},
+				},
+			},
+			want: [][]float64{
+				{2, 4, 6},
+				{2, 4, 6},
+				{2, 4, 6},
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := EntrywiseSum(tt.args.a, tt.args.b)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("EntrywiseSum() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("EntrywoseSum() = %v, want %v", got, tt.want)
 			}
 		})
 	}
