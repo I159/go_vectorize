@@ -189,3 +189,46 @@ func TestEntrywiseSum(t *testing.T) {
 		})
 	}
 }
+
+func TestTranspose(t *testing.T) {
+	type args struct {
+		matrix   [][]float64
+		lineSize int
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantOutput [][]float64
+		wantErr    bool
+	}{
+		{
+			name: "transpose",
+			args: args{
+				[][]float64{
+					{1, 2, 3, 4},
+					{1, 2, 3, 4},
+					{1, 2, 3, 4},
+				},
+				4,
+			},
+			wantOutput: [][]float64{
+				{1, 1, 1},
+				{2, 2, 2},
+				{3, 3, 3},
+				{4, 4, 4},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotOutput, err := Transpose(tt.args.matrix, tt.args.lineSize)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Transpose() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(gotOutput, tt.wantOutput) {
+				t.Errorf("Transpose() = %v, want %v", gotOutput, tt.wantOutput)
+			}
+		})
+	}
+}

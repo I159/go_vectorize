@@ -77,3 +77,22 @@ func OuterProduct(column, row []float64) (output [][]float64) {
 	}
 	return
 }
+
+func Transpose(matrix [][]float64, lineSize int) (output [][]float64, err error) {
+	output = make([][]float64, lineSize)
+	for i, v := range matrix {
+		if len(v) != lineSize {
+			err = fmt.Errorf(
+				"Inconsistent matrix line size. Expected: %d. Actual: %d",
+				lineSize, len(v),
+			)
+			return
+		}
+		for j := range v {
+			// To do transpose in place switch matrix items
+			//matrix[i][j], matrix[j][i] = matrix[j][j], matrix[i][j]
+			output[j] = append(output[j], matrix[i][j])
+		}
+	}
+	return
+}
