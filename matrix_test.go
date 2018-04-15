@@ -232,3 +232,37 @@ func TestTranspose(t *testing.T) {
 		})
 	}
 }
+
+func TestMultiplyArrays(t *testing.T) {
+	type args struct {
+		a []float64
+		b []float64
+	}
+	tests := []struct {
+		name       string
+		args       args
+		wantOutput []float64
+		wantErr    bool
+	}{
+		{
+			name: "multiply_arrays",
+			args: args{
+				[]float64{1, 2, 3},
+				[]float64{2, 3, 4},
+			},
+			wantOutput: []float64{2, 6, 12},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotOutput, err := MultiplyArrays(tt.args.a, tt.args.b)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("MultiplyArrays() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(gotOutput, tt.wantOutput) {
+				t.Errorf("MultiplyArrays() = %v, want %v", gotOutput, tt.wantOutput)
+			}
+		})
+	}
+}
