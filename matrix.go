@@ -96,3 +96,16 @@ func Transpose(matrix [][]float64, lineSize int) (output [][]float64, err error)
 	}
 	return
 }
+
+func MultiplyArrays(a, b []float64) (output []float64, err error) {
+	if len(a) != len(b) {
+		err = fmt.Errorf(
+			"Inconsistent arrays sizes. a: %d; b: %d",
+			len(a), len(b),
+		)
+	}
+	for i := range a {
+		output = append(output, a[i]*b[i])
+	}
+	return
+}
